@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "gifski-buildpack"
+exit 0
