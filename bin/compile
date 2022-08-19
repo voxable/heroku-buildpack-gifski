@@ -16,5 +16,36 @@ else
   GIFSKI_VERSION="1.7.1"
 fi
 
+if [[ -f "$ENV_DIR/GIFSKI_PATH" ]]; then
+  GIFSKI_PATH=$(cat "$ENV_DIR/GIFSKI_PATH")
+else
+  GIFSKI_PATH="./bin/"
+fi
+
+export CARGO_HOME="$CACHE_DIR/cargo"
+export CARGO_TARGET_DIR="$CACHE_DIR/target"
+export PATH="$CARGO_HOME/bin:$PATH"
+
+cd "$CACHE_DIR"
+if [[ -d "$CARGO_HOME" ]]; then
+  echo "-----> Checking Rust Updates"
+  rustup self update
+  rustup update stable
+  rustup default stable
+else
+  echo "-----> Installing rustup"
+  mkdir -pv "$CARGO_HOME" && cd "$CARGO_HOME"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh &&
+    chmod 755 rustup.sh &&
+    ./rustup.sh -y --default-toolchain stable &&
+    rm rustup.sh
+fi
+
+echo "-----> Building Rust Application"
+cd "$BUILD_DIR" &&
+  cargo build --release &&
+  find "$CARGO_TARGET_DIR/release" -maxdepth 1 -type f -executable -exec cp {} "$BUILD_DIR" \;
+
 echo "-----> Installing gifski via cargo"
-cargo install gifski@$GIFSKI_VERSION
+cargo install gifski@$GIFSKI_VERSION --root $GIFSKI_PATH
+

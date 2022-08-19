@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-echo "gifski-buildpack"
-exit 0
+[[ -f "$1/Cargo.toml" ]] && {
+  echo "Rust"
+  exit 0
+}
+
+exit 1
