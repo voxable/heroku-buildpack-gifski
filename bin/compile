@@ -16,27 +16,5 @@ else
   GIFSKI_VERSION="1.7.1"
 fi
 
-GIFSKI_URL="https://github.com/ImageOptim/gifski/releases/download/${GIFSKI_VERSION}/gifski-${GIFSKI_VERSION}.tar.xz"
-GIFSKI_TAR="$CACHE_DIR/gifski.tar.xz"
-GIFSKI_PATH="$TMP_PATH/gifski"
-
-BIN_DIR=$(cd $(dirname $0); pwd)
-
-if [ -f $GIFSKI_TAR ]; then
-  echo "-----> Using GIFSKI tar from cache"
-else
-  echo "-----> Downloading GIFSKI tar"
-  curl -L $GIFSKI_URL -o $GIFSKI_TAR
-fi
-
-echo "-----> Unpacking tar"
-tar -xf $GIFSKI_TAR -C $TMP_PATH
-
-echo "-----> Setting permissions"
-chmod +x $GIFSKI_PATH
-
-echo "-----> Moving binaries to the right place"
-mv $GIFSKI_PATH $BIN_PATH/
-
-echo "-----> Cleaning up"
-rm -rf $GIFSKI_TAR
+echo "-----> Installing gifski via cargo"
+cargo install gifski@$GIFSKI_VERSION
