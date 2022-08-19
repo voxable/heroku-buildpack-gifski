@@ -21,8 +21,6 @@ fi
 GIFSKI_URL="https://github.com/ImageOptim/gifski/releases/download/${GIFSKI_VERSION}/gifski-${GIFSKI_VERSION}.tar.xz"
 GIFSKI_TAR="$CACHE_DIR/gifski.tar.xz"
 GIFSKI_PATH="$TMP_PATH/gifski"
-GIFSKI_BINARIES="$GIFSKI_PATH/bin"
-GIFSKI_LIBS="$GIFSKI_PATH/lib"
 
 BIN_DIR=$(cd $(dirname $0); pwd)
 
@@ -37,13 +35,10 @@ echo "-----> Unpacking tar"
 tar -xf $GIFSKI_TAR -C $TMP_PATH
 
 echo "-----> Setting permissions"
-chmod +x $GIFSKI_BINARIES/*
+chmod +x $GIFSKI_PATH
 
 echo "-----> Moving binaries to the right place"
-mv $GIFSKI_BINARIES/* $BIN_PATH/
-
-echo "-----> Moving libs to the right place"
-mv $GIFSKI_LIBS/* $LIB_PATH/
+mv $GIFSKI_PATH $BIN_PATH/
 
 echo "-----> Cleaning up"
-rm -rf $GIFSKI_PATH
+rm -rf $GIFSKI_TAR
