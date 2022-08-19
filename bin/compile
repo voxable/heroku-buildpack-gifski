@@ -19,7 +19,7 @@ fi
 if [[ -f "$ENV_DIR/GIFSKI_PATH" ]]; then
   GIFSKI_PATH=$(cat "$ENV_DIR/GIFSKI_PATH")
 else
-  GIFSKI_PATH="./bin/"
+  GIFSKI_PATH="/app/bin/"
 fi
 
 export CARGO_HOME="$CACHE_DIR/cargo"
